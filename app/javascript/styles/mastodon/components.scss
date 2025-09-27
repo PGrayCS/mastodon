@@ -7549,6 +7549,11 @@ a.status-card {
     .video-player__controls {
       visibility: hidden;
     }
+
+    // Allow expand button to be visible even when inactive
+    .video-player__controls .video-player__buttons.right {
+      visibility: visible;
+    }
   }
 
   .video-player__volume::before,
@@ -7685,6 +7690,11 @@ a.status-card {
     video,
     .video-player__controls {
       visibility: hidden;
+    }
+
+    // Allow expand button to be visible even when inactive
+    .video-player__controls .video-player__buttons.right {
+      visibility: visible;
     }
   }
 

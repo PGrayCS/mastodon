@@ -16,6 +16,8 @@ export default class MediaAttachments extends ImmutablePureComponent {
     height: PropTypes.number,
     width: PropTypes.number,
     visible: PropTypes.bool,
+    onOpenMedia: PropTypes.func,
+    onOpenVideo: PropTypes.func,
   };
 
   static defaultProps = {
@@ -52,7 +54,7 @@ export default class MediaAttachments extends ImmutablePureComponent {
   };
 
   render () {
-    const { status, width, height, visible } = this.props;
+    const { status, width, height, visible, onOpenMedia, onOpenVideo } = this.props;
     const mediaAttachments = status.get('media_attachments');
     const language = status.getIn(['language', 'translation']) || status.get('language') || this.props.lang;
 
@@ -101,7 +103,7 @@ export default class MediaAttachments extends ImmutablePureComponent {
               inline
               sensitive={status.get('sensitive')}
               visible={visible}
-              onOpenVideo={noop}
+              onOpenVideo={onOpenVideo || noop}
             />
           )}
         </Bundle>
@@ -117,7 +119,7 @@ export default class MediaAttachments extends ImmutablePureComponent {
               defaultWidth={width}
               visible={visible}
               height={height}
-              onOpenMedia={noop}
+              onOpenMedia={onOpenMedia || noop}
             />
           )}
         </Bundle>
