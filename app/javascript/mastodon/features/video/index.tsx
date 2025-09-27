@@ -752,20 +752,25 @@ export const Video: React.FC<{
   }, [api, setVolume, setMuted]);
 
   const handleOpenVideo = useCallback(() => {
-    if (!videoRef.current) {
-      return;
+    if (videoRef.current) {
+      // Video element exists, use its current state
+      const wasPaused = videoRef.current.paused;
+      videoRef.current.pause();
+
+      onOpenVideo?.({
+        startTime: videoRef.current.currentTime,
+        autoPlay: !wasPaused,
+        defaultVolume: videoRef.current.volume,
+      });
+    } else {
+      // Video element not rendered (hidden media), use defaults
+      onOpenVideo?.({
+        startTime: 0,
+        autoPlay: false,
+        defaultVolume: startVolume ?? 1,
+      });
     }
-
-    const wasPaused = videoRef.current.paused;
-
-    videoRef.current.pause();
-
-    onOpenVideo?.({
-      startTime: videoRef.current.currentTime,
-      autoPlay: !wasPaused,
-      defaultVolume: videoRef.current.volume,
-    });
-  }, [onOpenVideo]);
+  }, [onOpenVideo, startVolume]);
 
   const handleCloseVideo = useCallback(() => {
     if (!videoRef.current) {
