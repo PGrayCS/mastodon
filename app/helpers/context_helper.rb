@@ -30,7 +30,7 @@ module ContextHelper
       'quote' => 'https://w3id.org/fep/044f#quote',
       'quoteUri' => 'http://fedibird.com/ns#quoteUri',
       '_misskey_quote' => 'https://misskey-hub.net/ns#_misskey_quote',
-      'quoteAuthorization' => 'https://w3id.org/fep/044f#quoteAuthorization',
+      'quoteAuthorization' => { '@id' => 'https://w3id.org/fep/044f#quoteAuthorization', '@type' => '@id' },
     },
     interaction_policies: {
       'gts' => 'https://gotosocial.org/ns#',
@@ -38,6 +38,12 @@ module ContextHelper
       'canQuote' => { '@id' => 'gts:canQuote', '@type' => '@id' },
       'automaticApproval' => { '@id' => 'gts:automaticApproval', '@type' => '@id' },
       'manualApproval' => { '@id' => 'gts:manualApproval', '@type' => '@id' },
+    },
+    quote_authorizations: {
+      'gts' => 'https://gotosocial.org/ns#',
+      'quoteAuthorization' => { '@id' => 'https://w3id.org/fep/044f#quoteAuthorization', '@type' => '@id' },
+      'interactingObject' => { '@id' => 'gts:interactingObject' },
+      'interactionTarget' => { '@id' => 'gts:interactionTarget' },
     },
   }.freeze
 

@@ -5,7 +5,6 @@ import path from 'node:path';
 import js from '@eslint/js';
 import { globalIgnores } from 'eslint/config';
 import formatjs from 'eslint-plugin-formatjs';
-// @ts-expect-error -- No typings
 import importPlugin from 'eslint-plugin-import';
 import jsdoc from 'eslint-plugin-jsdoc';
 import jsxA11Y from 'eslint-plugin-jsx-a11y';
@@ -350,6 +349,8 @@ export default tseslint.config([
       'import/no-default-export': 'warn',
 
       'jsdoc/require-jsdoc': 'off',
+      'jsdoc/require-param': 'off',
+      'jsdoc/require-returns': 'off',
 
       'react/prefer-stateless-function': 'warn',
       'react/function-component-definition': [
@@ -402,6 +403,12 @@ export default tseslint.config([
 
     languageOptions: {
       globals: globals.vitest,
+    },
+  },
+  {
+    files: ['**/*.test.*'],
+    rules: {
+      'no-global-assign': 'off',
     },
   },
   {
