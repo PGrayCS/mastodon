@@ -1,6 +1,8 @@
 import { normalizeStatus, searchTextFromRawStatus } from '../normalizer';
 
-// Mock the initial_state module
+// Mock the initial_state module to provide a consistent value for expandSpoilers.
+// The normalizer uses expandSpoilers to determine if the status should be hidden
+// when it has a spoiler. Setting it to false ensures consistent test behavior.
 vi.mock('../../../initial_state', () => ({
   expandSpoilers: false,
 }));
@@ -110,7 +112,11 @@ describe('normalizeStatus', () => {
     });
 
     it('strips quote fallback from search_index when quoted_status is unavailable (deleted)', () => {
-      // This is the critical test case for the bug fix
+      // This is the critical test case for the bug fix (GitHub issue #37048).
+      // When the quoted status is unavailable (deleted, unauthorized, etc.), the API returns
+      // quote: { state: 'deleted' } without quoted_status or quoted_status_id.
+      // Previously, this caused the fallback "RE: https://..." to remain in search_index,
+      // which was then used for the browser tab title.
       const status = createBaseStatus({
         content: '<p>I really enjoyed this episode</p><p class="quote-inline">RE: https://example.com/@other/2</p>',
         quote: {
